@@ -6,8 +6,10 @@ var y = window.innerHeight*1/2;
 Leap.loop(controllerOptions, function(frame){
 	clear();
 	circle(x,y,50);
-	var random = Math.random();
-	x = x + random;
+	var randomX = Math.random();
+	x = x + randomX;
+	var randomY = Math.random(-1);
+	y = y +randomY
 	
 
 }
