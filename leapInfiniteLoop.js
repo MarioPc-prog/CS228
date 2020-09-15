@@ -1,37 +1,38 @@
 var controllerOptions = {};
 var x = window.innerWidth;
-//set window height 1/2 as y
 var y = window.innerHeight;
-//var rawXMin = 1000;
-//var rawXMax = -1000;
-//var rawYMin = 1000;
-//var rawYMax = -1000;
+var rawXMin = 1000;
+var rawXMax = 100;
+var rawYMin = 1000;
+var rawYMax = 100;
 function HandleFinger(finger){
 	var x = finger.tipPosition[0];
 	var y=finger.tipPosition[1];
 	var z=finger.tipPosition[2];
 	//makes y value go up and down 
-	newY=window.innerHeight-y;
-	circle(x,newY,50);
+	y=window.innerHeight-y;
 	//checks wheather the current horizontal position of the tip is less than the value stored in rawXMin.
-	//if (x <rawXMin){
-	//	rawXMin=x;
-	//}
-	//if (x <rawXMax){
-        //        rawXMax=x;
-        //}
-	//if (y <rawYMin){
-         //       rawYMin=y;
-        //}
-	//if (y <rawYMax){
-         //       rawYMax=y;
-        //}
-	//var NewValuex =((x-rawXMin)/(rawXMax-rawXMin))*(window.innerWidth-0)+0;
-	//var NewValuey =((y-rawYMin)/(rawYMax-rawYMin))*(window.innerHeight-0)+0; 
-	console.log(finger.tipPosition);
-	//NewValuey=window.innerHeight-NewValuey;
-	//circle(x,y,50);
-	//circle(NewValuex,NewValuey,50);
+	if (finger.tipPosition[0] <rawXMin){
+		rawXMin=finger.tipPosition[0];
+	}
+	if (finger.tipPosition[0] > rawXMax){
+                rawXMax=finger.tipPosition[0];
+        }
+	if (finger.tipPosition[1] <rawYMin){
+                rawYMin=finger.tipPosition[1];
+        }
+	if (finger.tipPosition[1] > rawYMax){
+                rawYMax=finger.tipPosition[1];
+        }
+	var oldRangeX = (rawXMax-rawXMin);
+	var newRangeX=(window.innerWidth-0);
+	var x =(((x - rawXMin) * newRangeX) /oldRangeX) + rawXMin;
+
+	var oldRangeY = (rawYMax-rawYMin);
+        var newRangeY=(window.innnerHeight-y-0);
+        var newY =(((y - rawYMin) * newRangeY) /oldRangeY) + rawYMin;
+	newY =(y-rawYMin)*(window.innerHeight-0)/(rawYMax-rawYMin)+rawYMin
+ 	circle(x,y,50);
 }
 function HandleHand(hand){
 	 var fingers=hand.fingers;
@@ -55,17 +56,6 @@ function Handleframe(frame){
 }
 Leap.loop(controllerOptions, function(frame){
 	clear();
-	//circle(x,y,50);
-	//var randomX = Math.random();
-	//x = x + randomX;
-	//var randomY = Math.random(-1);
-	//y = y +randomY
-	//console.log(frame);
 	Handleframe(frame);
 
 });
-
-
-
-
-
